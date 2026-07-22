@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Enterprise Agent Estate Is the Next Infrastructure Decision — Lyzr Whitepaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  /* Light surfaces */
+  --page:#E8E0D5;      /* outer desk */
+  --sheet:#FFFDFA;     /* paper */
+  --inner:#F7F2EA;     /* inset panels, figure grounds */
+  --card:#FAF5EE;
+
+  /* Lyzr palette , fills, bars, rules */
+  --orange:#EC7943; --blue:#4A6EA8; --green:#378063; --purple:#7A629C; --gold:#CF9F31; --red:#C94658;
+  /* Darkened variants , small text on light only */
+  --orangeD:#B4541F; --blueD:#3A5686; --greenD:#2A6650; --purpleD:#5F4B7D; --goldD:#8A6512; --redD:#A83346;
+
+  --o-lt:rgba(236,121,67,.09);  --o-bd:rgba(236,121,67,.38);
+  --b-lt:rgba(74,110,168,.08);  --b-bd:rgba(74,110,168,.35);
+  --g-lt:rgba(55,128,99,.08);   --g-bd:rgba(55,128,99,.35);
+  --p-lt:rgba(122,98,156,.08);  --p-bd:rgba(122,98,156,.38);
+  --go-lt:rgba(207,159,49,.11); --go-bd:rgba(207,159,49,.45);
+  --r-lt:rgba(201,70,88,.07);   --r-bd:rgba(201,70,88,.32);
+
+  --rule:#EBE3D8; --rule2:#D9CDBC;
+
+  /* Ink */
+  --ink:#1E0F07; --ink2:#5C4A3B; --ink3:#93816F;
+
+  --serif:'Playfair Display',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink2);background:var(--page);line-height:1.75;-webkit-font-smoothing:antialiased}
+.doc{max-width:1080px;margin:0 auto;padding:40px 20px 80px}
+.sheet{position:relative;background:var(--sheet);border:1px solid var(--rule2);border-radius:4px;margin-bottom:22px;padding:76px 92px 68px;overflow:hidden;box-shadow:0 1px 3px rgba(30,15,7,.05)}
+.sheet::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(30,15,7,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(30,15,7,.022) 1px,transparent 1px);
+  background-size:34px 34px}
+.sheet>*{position:relative;z-index:1}
+.rhead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--rule);padding-bottom:16px;margin-bottom:52px}
+.rhead .t{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.rfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);padding-top:14px;margin-top:56px;font-size:10.5px;letter-spacing:.6px;color:var(--ink3)}
+
+/* logo */
+.logo{display:inline-flex;align-items:center;gap:9px}
+.logo svg{width:22px;height:22px}
+.logo .wm{font-weight:600;font-size:19px;letter-spacing:.5px;color:var(--ink)}
+
+/* cover */
+.cover{padding:92px 92px 84px;background:linear-gradient(160deg,#FFFEFC 0%,#FAF4EB 55%,#F4EADC 100%)}
+.cover .top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--rule2);padding-bottom:30px;margin-bottom:0}
+.cover .top .meta{text-align:right;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);line-height:1.9}
+.cover h1{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:56px;line-height:1.1;letter-spacing:-.4px;margin:24px 0 0}
+.cover h1 em{font-style:italic;color:var(--orangeD)}
+.cover .sub{font-size:20px;color:var(--ink2);max-width:640px;margin-top:26px;line-height:1.6}
+.cover .fig{margin:56px 0 8px}
+.cover .credits{display:flex;gap:56px;flex-wrap:wrap;border-top:1px solid var(--rule2);padding-top:26px;margin-top:44px}
+.cover .credits div{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink3)}
+.cover .credits b{display:block;color:var(--ink);font-size:13px;letter-spacing:.3px;text-transform:none;margin-top:5px;font-weight:500}
+
+/* type */
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orangeD);margin-bottom:20px}
+h2.st{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:44px;line-height:1.1;letter-spacing:-.4px;margin-bottom:14px}
+h2.st em{font-style:italic}
+.deck{font-size:20px;color:var(--ink2);line-height:1.6;max-width:760px;margin-bottom:40px}
+h3.sub{font-family:var(--sans);font-weight:600;color:var(--ink);font-size:22px;margin:44px 0 14px;letter-spacing:-.2px}
+h4.sub2{font-family:var(--sans);font-weight:600;color:var(--ink);font-size:17px;margin:30px 0 8px;letter-spacing:.1px}
+p{font-size:17px;margin-bottom:19px;max-width:820px}
+p.lead{font-size:19px;color:var(--ink);max-width:820px}
+strong{color:var(--ink);font-weight:600}
+em.term{font-style:normal;color:var(--ink);font-weight:600}
+a{color:var(--orangeD);text-decoration:none;border-bottom:1px solid var(--o-bd)}
+.small{font-size:15px;color:var(--ink2)}
+
+/* two-column intro grid */
+.grid2{display:grid;grid-template-columns:230px 1fr;gap:48px;margin:8px 0 8px}
+.grid2 .k{font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink);border-top:2px solid var(--orange);padding-top:14px;line-height:1.4}
+.grid2 .k .q{color:var(--ink2);font-weight:400;font-size:15px;display:block;margin-top:8px;line-height:1.55}
+.grid2 .body p:last-child{margin-bottom:0}
+.gap{height:34px}
+
+/* figures */
+figure{margin:40px 0;border:1px solid var(--rule2);border-radius:4px;background:var(--inner);overflow:hidden}
+figure .cap{border-top:1px solid var(--rule2);background:var(--sheet);padding:14px 22px;font-size:12.5px;color:var(--ink3);line-height:1.55}
+figure .cap b{color:var(--ink2);font-weight:600}
+figure svg{display:block;width:100%;height:auto;background:transparent}
+.fpad{padding:34px 30px}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+.stats.two{grid-template-columns:repeat(2,1fr)}
+.stats.four .n{font-size:34px}
+.stat{border:1px solid var(--rule2);border-radius:4px;background:var(--inner);padding:24px 22px}
+.stat .n{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:38px;line-height:1;letter-spacing:-1px}
+.stat .n em{font-style:italic;color:var(--orangeD)}
+.stat .l{font-size:14px;color:var(--ink2);margin-top:10px;line-height:1.45}
+.stat .s{font-size:10.5px;color:var(--ink3);margin-top:12px;letter-spacing:.4px}
+
+/* callout */
+.callout{border:1px solid var(--go-bd);background:var(--go-lt);border-left:3px solid var(--gold);border-radius:4px;padding:24px 26px;margin:32px 0}
+.callout .h{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--goldD);margin-bottom:10px}
+.callout p{margin-bottom:0;font-size:16px}
+
+/* before/after */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:36px 0}
+.ba .col{border:1px solid var(--rule2);border-radius:4px;padding:26px 24px}
+.ba .col.bad{border-color:var(--r-bd);background:var(--r-lt)}
+.ba .col.good{border-color:var(--g-bd);background:var(--g-lt)}
+.ba .col .hd{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.ba .bad .hd{color:var(--redD)} .ba .good .hd{color:var(--greenD)}
+.ba ul{list-style:none} .ba li{font-size:15px;color:var(--ink2);padding:9px 0 9px 24px;position:relative;border-top:1px solid var(--rule2);line-height:1.5}
+.ba li:first-child{border-top:none}
+.ba .bad li::before{content:'✕';position:absolute;left:0;color:var(--redD);font-size:12px;top:11px}
+.ba .good li::before{content:'✓';position:absolute;left:0;color:var(--greenD);font-size:12px;top:11px}
+.ba li b{color:var(--ink);font-weight:600}
+
+/* comparison table */
+table.cmp{width:100%;border-collapse:collapse;margin:32px 0;font-size:15px}
+table.cmp th{text-align:left;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);font-weight:700;padding:12px 16px;border-bottom:1px solid var(--rule2)}
+table.cmp td{padding:14px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+table.cmp tr:nth-child(even) td{background:var(--inner)}
+table.cmp td:first-child{color:var(--ink);font-weight:600;width:26%}
+table.cmp .no{color:var(--redD)} table.cmp .yes{color:var(--greenD)}
+
+/* case cards */
+.cases{display:flex;flex-direction:column;gap:14px;margin:34px 0}
+.case{border:1px solid var(--rule2);border-left:3px solid var(--blue);border-radius:4px;background:var(--inner);padding:22px 26px}
+.case.tier1{border-left-color:var(--green)}
+.case.tier2{border-left-color:var(--gold)}
+.case.tier3{border-left-color:var(--purple)}
+.case .top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.case .nm{font-size:18px;font-weight:600;color:var(--ink)}
+.case .pill{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);border:1px solid var(--rule2);background:var(--sheet);border-radius:20px;padding:4px 11px;white-space:nowrap}
+.case p{font-size:15px;margin-bottom:0;color:var(--ink2)}
+.case .proves{font-size:13px;color:var(--greenD);margin-top:10px}
+.case.tier2 .proves{color:var(--goldD)} .case.tier3 .proves{color:var(--purpleD)}
+
+
+/* TOC */
+.toc{list-style:none}
+.toc li{display:flex;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--rule);font-size:17px}
+.toc li .n{font-family:var(--serif);color:var(--orangeD);width:52px;font-size:16px}
+.toc li .t{color:var(--ink);font-weight:500;flex:1}
+.toc li .d{color:var(--ink3);font-size:13px}
+
+/* CTA */
+.cta{background:var(--orange);border-radius:6px;padding:56px 60px;margin:22px 0;color:#2a0f04}
+.cta h2{font-family:var(--serif);font-weight:700;font-size:42px;line-height:1.1;color:#2a0f04;margin-bottom:16px}
+.cta p{color:#4a1e08;font-size:17px;max-width:640px;margin-bottom:30px}
+.cta .btns{display:flex;gap:14px;flex-wrap:wrap}
+.cta .btn{background:#2a0f04;color:#fff;font-weight:600;font-size:15px;padding:15px 28px;border-radius:4px;border:none;cursor:pointer}
+.cta .btn.alt{background:transparent;color:#2a0f04;border:1.5px solid #2a0f04}
+
+/* appendix */
+.appx{background:#FBF7F0;border:1px solid var(--go-bd)}
+.appx .eyebrow{color:var(--goldD)}
+.srcs{font-size:14px;line-height:1.7}
+.srcs .grp{margin-bottom:22px}
+.srcs .grp .gh{font-weight:600;color:var(--ink);font-size:14px;margin-bottom:6px;letter-spacing:.2px}
+.srcs .grp div{color:var(--ink3);padding-left:2px}
+.ednote{border:1px solid var(--r-bd);background:var(--r-lt);border-radius:4px;padding:22px 24px;margin-top:26px}
+.ednote .h{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--redD);margin-bottom:12px}
+.ednote ol{padding-left:20px;font-size:14.5px;color:var(--ink2)}
+.ednote li{margin-bottom:10px}
+.ednote li b{color:var(--ink)}
+sup{font-size:.62em;color:var(--orangeD);font-weight:600}
+
+.fn{border:none;text-decoration:none}
+.fn sup{color:var(--orangeD);font-weight:600;font-size:.62em;padding-left:1px}
+.sources-list{list-style:none;counter-reset:src;margin-top:8px}
+.sources-list li{counter-increment:src;position:relative;padding:16px 0 16px 42px;border-top:1px solid var(--rule);font-size:15px;line-height:1.6;color:var(--ink2)}
+.sources-list li:first-child{border-top:none}
+.sources-list li::before{content:counter(src);position:absolute;left:0;top:16px;font-family:var(--serif);font-weight:700;color:var(--orangeD);font-size:15px}
+.sources-list .claim{color:var(--ink);font-weight:500}
+.sources-list a.src{color:var(--orangeD);border-bottom:1px solid var(--o-bd);word-break:break-word}
+.sources-list .back{margin-left:6px;font-size:12px;color:var(--ink3);border:none}
+
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ============ COVER ============ -->
+<section class="sheet cover">
+  <h1>The enterprise agent<br/>estate is the next<br/><em>infrastructure decision</em></h1>
+  <p class="sub">When the model layer can shift, governing what you've built matters more than what you built it on.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EC7943"/><stop offset="1" stop-color="#4A6EA8"/></linearGradient></defs>
+      <g stroke="#E3D8C8" stroke-width="1">
+        <line x1="0" y1="60" x2="900" y2="60"/><line x1="0" y1="120" x2="900" y2="120"/><line x1="0" y1="180" x2="900" y2="180"/>
+      </g>
+      <path d="M20 200 C 180 200, 200 60, 360 60 S 560 200, 720 120 S 860 60, 880 60" fill="none" stroke="url(#cg)" stroke-width="2.5"/>
+      <path d="M20 220 C 200 220, 240 120, 400 120 S 620 220, 760 160 S 870 120, 880 120" fill="none" stroke="#C0AE99" stroke-width="1.4"/>
+      <g fill="#EC7943"><circle cx="360" cy="60" r="4.5"/><circle cx="720" cy="120" r="4.5"/></g>
+      <g fill="#4A6EA8"><circle cx="180" cy="130" r="4"/><circle cx="540" cy="150" r="4"/><circle cx="880" cy="60" r="5"/></g>
+      <g font-family="DM Sans" font-size="10.5" fill="#93816F" letter-spacing="1.5">
+        <text x="20" y="30">BUILD</text><text x="250" y="30">ADD</text><text x="480" y="30">GOVERN</text><text x="760" y="30">DEPLOY</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ TOC ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">Contents</span></div>
+  <div class="eyebrow" style="color:var(--ink3)">Contents</div>
+  <h2 class="st">What this paper<br/>covers</h2>
+  <div class="gap"></div>
+  <ul class="toc">
+    <li><span class="n">01</span><span class="t">Where the future of agents is headed</span><span class="d">The hook · model geopolitics</span></li>
+    <li><span class="n">02</span><span class="t">What "agent to production" actually requires</span><span class="d">Build · Add · Govern · Deploy</span></li>
+    <li><span class="n">03</span><span class="t">Inside the control plane: what it produces</span><span class="d">The proof · the mechanism</span></li>
+    <li><span class="n">04</span><span class="t">Workflow automation is not a control plane</span><span class="d">Why the tools you already run aren't enough</span></li>
+    <li><span class="n">05</span><span class="t">The control-plane field, dissected</span><span class="d">Observability vs. governance</span></li>
+    <li><span class="n">06</span><span class="t">Packaging and form factor</span><span class="d">Lyzr Studio · block · open source · deployment</span></li>
+    <li><span class="n">07</span><span class="t">Proof in the field</span><span class="d">Governance at scale, first</span></li>
+    <li><span class="n">08</span><span class="t">The layer that outlives the model</span><span class="d">Close</span></li>
+  </ul>
+</section>
+
+<!-- ============ SECTION 1 ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 01: The Hook</span></div>
+  <div class="eyebrow">SECTION 01: Where Agents Are Headed</div>
+  <h2 class="st">Your model choice is now<br/>a <em>supply-chain</em> decision</h2>
+  <p class="deck">Most agent stacks are not built like they know that. The strongest reason a technical leader needs a control layer in 2026 is not that agent sprawl is messy. It is that the ground under every model is moving, and the layer that survives the movement is the one this paper is about.</p>
+
+  <div class="grid2">
+    <div class="k">Ask a harder question<span class="q">Not "which model is best," but "how fast could I replace it?"</span></div>
+    <div class="body">
+      <p>Ask this: if the foundation model your agents run on were pulled offline tomorrow by a government you do not answer to, how long would it take you to swap it out? For most teams, the honest answer is measured in re-architecture, not in minutes. That answer is now a live operational risk, not a thought experiment, and it is the argument for everything that follows.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">The model landscape became a geopolitical variable</h3>
+  <p>For most of the last decade, choosing a model was a technical decision: benchmark it, price it, ship it. That era is closing. In mid-2026 the model layer has become an object of statecraft, and the events are no longer hypothetical.</p>
+  <p>In June 2026, Anthropic suspended access to two of its frontier models , Fable 5 and Mythos 5 , to comply with United States Department of Commerce export controls. Access was restored roughly three weeks later, once those controls were lifted, not because the models changed.<a class="fn" id="fnref1" href="#fn1"><sup>1</sup></a> Read that sequence plainly: a globally deployed frontier model went dark on government order, and came back on government order. The scenario most architecture reviews had filed under "theoretical" happened, was resolved by policy rather than engineering, and left every team that depended on those models with an outage they could not fix themselves.</p>
+  <p>What happened next is the part that should worry a technical leader more than the outage itself. US enterprise usage of Chinese models surged in the wake of those restrictions: unsurprising, given some of those systems offer 60% to 90% cost savings over domestic alternatives.<a class="fn" id="fnref2" href="#fn2"><sup>2</sup></a> The US government is now evaluating restrictions on corporate use of Chinese models on security grounds, and Congress is investigating the trend.<a class="fn" id="fnref3" href="#fn3"><sup>3</sup></a> At the same time, Beijing is reportedly weighing curbs on overseas access to its own most advanced models. Authorities have held meetings with Alibaba, ByteDance and Z.ai about a tiered framework: basic open-source tools subject to registration or filing, advanced technologies requiring rigorous security review, and frontier models barred from public global release or restricted to domestic use entirely.<a class="fn" id="fnref4" href="#fn4"><sup>4</sup></a></p>
+  <p>Read those two developments together and the shape is a vise, not a list. An export control pushed teams toward a cheaper alternative; that alternative is now under scrutiny on one side and may be walled off from the other. A team that reacted to June by migrating to a Chinese model did not remove a sovereign dependency; it may have acquired a second one. And note the detail that closes the last escape hatch: <strong>open-weight releases sit inside the proposed scope.</strong> "We will just self-host an open model" stops being a governance strategy the moment the release itself becomes a policy variable.</p>
+  <p>None of this is new, and that is the point. Regulators were acting on Chinese models eighteen months before the June suspension. Italy's Garante imposed a definitive limitation on DeepSeek processing Italian users' personal data in early 2025 , after the company argued that EU law did not apply to it , and the app came off both major app stores. Germany's data protection commissioner asked Apple and Google to remove it over unlawful data transfers to China. South Korea's PIPC suspended new downloads until the service was brought into line with Korean law. Australia, Taiwan and the Netherlands barred it from government devices outright.<a class="fn" id="fnref5" href="#fn5"><sup>5</sup></a></p>
+  <p>Read the scope of those actions carefully, because the detail is instructive rather than alarming. They targeted a consumer app, its data transfers, and its presence on public-sector devices: not an enterprise's right to run open weights inside its own environment. What they establish is precedent: regulators will act on a model's provenance, and they will act quickly. Set that alongside 2026, where states are now acting on a model's <em class="term">availability</em>, and two independent mechanisms are converging on the same dependency from opposite directions. Data-protection enforcement governs where your data may go. Export control governs whether the model exists for you at all. Neither is a problem you solve by choosing a better model.</p>
+  <p>The direction of travel is unambiguous even where individual details keep shifting, and they will keep shifting, in both capitals, faster than any procurement cycle. The model you standardize on is now exposed to export law, sanction, and sovereign policy in ways it was not eighteen months ago. The lesson is not "pick the right model." It is that picking is no longer a durable strategy.</p>
+
+  <div class="callout">
+    <div class="h">The CTO implication</div>
+    <p>If you cannot see which models and frameworks your agents depend on , and cannot swap them without re-architecting , you have inherited sovereign, regulatory, and supply risk directly into production, silently. Model choice is no longer a decision you make once. It is a dependency you must be able to govern.</p>
+  </div>
+
+  <h3 class="sub">One metric operationalizes the whole argument</h3>
+  <p>Geopolitics is abstract until you can measure your exposure to it. The single number that makes it concrete is <em class="term">Model Dependency Exposure</em>: the share of your production agent workloads riding on any one foundation model. A control plane is what lets you see that number and cap it, so that no ban, price shock, or policy change against a single model can take a disproportionate slice of your production estate offline at once.</p>
+
+  <figure>
+    <div class="fpad">
+      <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans">
+        <line x1="520" y1="20" x2="520" y2="230" stroke="#C94658" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <text x="524" y="34" font-size="11" fill="#A83346" font-weight="600">Concentration cap · 60%</text>
+        <g font-size="12.5" fill="#5C4A3B">
+          <text x="0" y="52">Model A</text><text x="0" y="102">Model B</text><text x="0" y="152">Model C</text><text x="0" y="202">Others (4)</text>
+        </g>
+        <g>
+          <rect x="120" y="38" width="256" height="20" rx="3" fill="#4A6EA8"/><text x="384" y="53" font-size="12" fill="#1E0F07">39%</text>
+          <rect x="120" y="88" width="150" height="20" rx="3" fill="#EC7943"/><text x="278" y="103" font-size="12" fill="#1E0F07">23%</text>
+          <rect x="120" y="138" width="124" height="20" rx="3" fill="#378063"/><text x="252" y="153" font-size="12" fill="#1E0F07">19%</text>
+          <rect x="120" y="188" width="124" height="20" rx="3" fill="#B5A390"/><text x="252" y="203" font-size="12" fill="#1E0F07">19%</text>
+        </g>
+        <g stroke="#D9CDBC"><line x1="120" y1="228" x2="640" y2="228"/></g>
+        <g font-size="10" fill="#93816F"><text x="116" y="245">0%</text><text x="300" y="245">30%</text><text x="500" y="245">60%</text></g>
+      </svg>
+    </div>
+    <div class="cap"><b>Figure 1: Model Dependency Exposure.</b> Inference calls per model ÷ total inference calls in the period, read from the model gateway, monthly. The cap is policy: no single model above 60% of production workloads. Distribution shown is illustrative of one estate, not an aggregate measurement. Source: Lyzr production telemetry.</div>
+  </figure>
+
+  <p>Everything downstream of this point , how agents are built, added, governed, and deployed , depends on first having a layer that can hold the model at arm's length. A control plane earns the model-portability argument on its own. In the next section we separate that job from the three it is constantly confused with, so the rest of the paper has a spine to hang on.</p>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>01</span></div>
+</section>
+
+<!-- ============ SECTION 2 ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 02: The Framework</span></div>
+  <div class="eyebrow" style="color:var(--blueD)">SECTION 02: Agent to Production</div>
+  <h2 class="st">Four jobs the market<br/>keeps <em>conflating</em></h2>
+  <p class="deck">"Agent to production" sounds like one problem. It is four, each needing a different tool. Naming them cleanly is the difference between buying a control plane and buying something that only looks like one.</p>
+
+  <p class="lead">Build, add, govern, deploy. These are distinct jobs, and most of the market sells one while implying all four.</p>
+  <p><strong>Build</strong> is authoring the agent: the logic, the prompts, the orchestration graph. <strong>Add</strong> is dropping an agent into an existing stack, the additive motion of extending what you already run. <strong>Deploy</strong> is getting an agent to production and keeping it live: uptime, SLA, rollback. And <strong>Govern</strong> , visibility, audit, model control, evaluation gates, identity, escalation tracking , is the job a control plane exists to do. A control plane sits squarely in Govern. But it is the layer that makes Build and Deploy <em class="term">safe</em>, and makes Add <em class="term">auditable</em>; it touches all four without being reducible to any of the other three.</p>
+
+  <figure>
+    <div class="fpad">
+      <svg viewBox="0 0 820 210" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans">
+        <g>
+          <rect x="10" y="60" width="180" height="90" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="210" y="60" width="180" height="90" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="410" y="52" width="190" height="106" rx="6" fill="rgba(236,121,67,.10)" stroke="#EC7943" stroke-width="1.6"/>
+          <rect x="620" y="60" width="180" height="90" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+        </g>
+        <g fill="#B5A390" font-size="22"><text x="192" y="112">→</text><text x="392" y="112">→</text><text x="602" y="112">→</text></g>
+        <g font-family="DM Sans" text-anchor="middle">
+          <text x="100" y="98" font-size="16" font-weight="600" fill="#1E0F07">Build</text>
+          <text x="100" y="122" font-size="11.5" fill="#5C4A3B">Lyzr Studio</text>
+          <text x="300" y="98" font-size="16" font-weight="600" fill="#1E0F07">Add</text>
+          <text x="300" y="122" font-size="11.5" fill="#5C4A3B">Drop into your stack</text>
+          <text x="505" y="94" font-size="17" font-weight="600" fill="#B4541F">Govern</text>
+          <text x="505" y="116" font-size="11.5" fill="#5C4A3B">Visibility · audit · model</text>
+          <text x="505" y="134" font-size="11.5" fill="#5C4A3B">control · eval gates</text>
+          <text x="710" y="98" font-size="16" font-weight="600" fill="#1E0F07">Deploy</text>
+          <text x="710" y="122" font-size="11.5" fill="#5C4A3B">Uptime · SLA · rollback</text>
+        </g>
+        <text x="505" y="182" text-anchor="middle" font-size="11" fill="#B4541F" font-weight="600" letter-spacing="1">← THE CONTROL PLANE LIVES HERE, AND MAKES THE OTHER THREE SAFE →</text>
+      </svg>
+    </div>
+    <div class="cap"><b>Figure 2: Build · Add · Govern · Deploy.</b> Four distinct jobs the market conflates. The Lyzr Control Plane occupies Govern and touches the rest. Source: Lyzr framework.</div>
+  </figure>
+
+  <h3 class="sub">The production gap, quantified</h3>
+  <p>The reason Govern becomes non-optional is a matter of arithmetic, not ideology. Two forces collide: most agents die before production, and the ones that live multiply until no human can watch them by eye.</p>
+  <p>On the first, the industry's own number is stark: 42% of companies now abandon most of their AI initiatives before they reach production, up from 17% a year earlier.<a class="fn" id="fnref6" href="#fn6"><sup>6</sup></a> The gap is rarely the model; it is the transition from pilot to production, where fragmented data, thin integrations, and operational constraints unravel what looked finished in a sandbox. Against that baseline, a control-plane-native motion changes the odds: roughly 85% of customers who start a sandbox go on to a paid production deployment, with evaluation gating a core reason why.</p>
+  <p>On the second, depth compounds. Adoption does not stop at one agent per team; it multiplies into the dozens, and at the leading edge a single enterprise runs hundreds of interconnected agents in one function. You cannot watch a fleet that size by eye. The moment an organization crosses from a handful of copilots to a fleet, governance stops being a nicety and becomes the only way to keep the fleet trustworthy.</p>
+
+  <div class="stats two">
+    <div class="stat"><div class="n">42%</div><div class="l">of companies now abandon most of their AI initiatives before production, up from 17% a year earlier</div><div class="s">INDUSTRY BASELINE · S&amp;P GLOBAL, VOICE OF THE ENTERPRISE 2025</div></div>
+    <div class="stat"><div class="n">85%</div><div class="l">of customers who start a sandbox reach a paid production deployment</div><div class="s">CUSTOMERS ENTERING PROD ÷ CUSTOMERS STARTING A SANDBOX · QUARTERLY COHORT · PRIOR 75%</div></div>
+    
+  </div>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>02</span></div>
+</section>
+
+<!-- ============ SECTION 3 ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 03: The Proof</span></div>
+  <div class="eyebrow" style="color:var(--greenD)">SECTION 03: Inside the Control Plane</div>
+  <h2 class="st">The numbers a control<br/>plane <em>can</em> produce</h2>
+  <p class="deck">Most agentic-AI tools cannot emit clean operational telemetry: because they observe agents built inside frameworks they do not own, and can watch a trace without being able to gate, cap, or promote it. Producing these numbers is itself the maturity signal.</p>
+
+  <h3 class="sub">Why the numbers are the differentiator</h3>
+  <p>An observability tool bolted onto a framework can tell you what happened. It cannot stop the thing that is about to happen. The difference between watching and governing is the difference between a dashboard and a control surface, and it shows up precisely in which numbers a system can produce cleanly and act on. The following families are what a real control plane watches, gates, or caps. Read them as a feature tour told through metrics rather than screenshots.</p>
+
+  <figure>
+    <div class="fpad">
+      <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans">
+        <g>
+          <rect x="0" y="0" width="260" height="86" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="280" y="0" width="260" height="86" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="560" y="0" width="260" height="86" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="0" y="106" width="260" height="86" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="280" y="106" width="260" height="86" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+          <rect x="560" y="106" width="260" height="86" rx="6" fill="rgba(207,159,49,.12)" stroke="#CF9F31" stroke-dasharray="5 4"/>
+        </g>
+        <g font-family="Playfair Display" font-weight="700" fill="#1E0F07" font-size="30">
+          <text x="20" y="46">95%</text><text x="300" y="46">99.9%</text><text x="580" y="46">95%</text>
+          <text x="20" y="152">&lt;60%</text><text x="300" y="152">$/action</text>
+        </g>
+        <text x="580" y="150" font-family="DM Sans" font-size="15" font-weight="600" fill="#8A6512">No telemetry: yet</text>
+        <g font-family="DM Sans" font-size="11.5" fill="#5C4A3B">
+          <text x="20" y="68">Agent task success (end-to-end)</text>
+          <text x="300" y="68">Uptime vs. SLA target</text>
+          <text x="580" y="68">Eval pass rate, pre-production</text>
+          <text x="20" y="174">Model Dependency Exposure cap</text>
+          <text x="300" y="174">Inference cost per agent action</text>
+          <text x="580" y="174">Escalation-to-human · on roadmap</text>
+        </g>
+        <text x="0" y="240" font-family="DM Sans" font-size="12.5" fill="#93816F">Agents in production, live workloads:</text>
+        <text x="0" y="272" font-family="Playfair Display" font-weight="700" font-size="34" fill="#B4541F">1,261</text>
+        <text x="150" y="272" font-family="DM Sans" font-size="12.5" fill="#5C4A3B">distinct agents running real work across frameworks and clouds</text>
+      </svg>
+    </div>
+    <div class="cap"><b>Figure 3: What the control plane emits.</b> Each tile is something the plane watches, gates, or caps. Denominators, monthly unless noted: task success = successful completions ÷ total invocations, weighted by customer. Uptime = uptime minutes ÷ scheduled minutes, weighted by customer (target ≥99.5%). Eval pass = agents passing ÷ agents submitted to the gate. Model exposure = inference calls per model ÷ total inference calls (policy cap, not a measured aggregate). Agents in production = distinct agent_ids at status=production with ≥1 invocation in 30 days. The dashed tile is shown honestly: escalation-to-human has no telemetry today and is not fabricated. Source: Lyzr production telemetry.</div>
+  </figure>
+
+  <p><strong>Agent task success rate</strong> , end-to-end completion without a human having to take over , sits around 95% on measured workloads. <strong>Availability</strong> runs at 99.9% of scheduled minutes, weighted by customer, against a contractual SLA target of 99.5%. We report it without ceremony: uptime in this range is table stakes for anything calling itself production infrastructure, and a technical reader trusts the plain framing more than the boast. <strong>Eval pass rate</strong> before promotion runs near 95%: the share of agents that clear the evaluation gate before they are allowed anywhere near a user. On workload shape, 100% of production workflow invocations involve more than one step or more than one agent, up from 90% a quarter earlier, against an internal bar of 50%. Read that as a statement about population rather than prowess: it says the estate is doing genuinely multi-step work rather than single-prompt call-and-response, which is the thing that makes governance necessary in the first place.</p>
+  <p>Two governance-specific numbers matter most for this paper. <strong>Model Dependency Exposure</strong>, from Section 1, is the control rather than the slide: inference calls per model over total inference calls in the period, read off the model gateway, with a standing policy that no single model exceeds 60% of production workloads. It is a cap you enforce per estate, not a trophy number to quote. And <strong>inference cost per agent action</strong> is the margin-and-defensibility metric, the one that decides whether a fleet is economically sustainable at scale.</p>
+
+  <div class="callout">
+    <div class="h">An honest gap, on purpose</div>
+    <p>Escalation-to-human rate currently shows no clean telemetry. We are keeping it visible as a roadmap item rather than inventing a number. In an evidence-led paper, one disclosed gap authenticates everything around it, and it models the exact behaviour a control plane is for: a mature system knows what it cannot yet see.</p>
+  </div>
+
+  <h3 class="sub">How it actually plugs in</h3>
+  <p>A technical reader will not accept "framework-agnostic, drop-in governance" as an assertion. It needs a mechanism. The Lyzr Control Plane sits <em class="term">above</em> the model and <em class="term">across</em> the framework. Agents built in LangChain, CrewAI, Agentforce, a hyperscaler's builder, or a custom stack connect to one plane without migration or rewrite. Because the plane sits above the LLM choice, swapping one model for another , GPT-class for Claude, Gemini for Llama , does not touch agent logic; the swap propagates from the control layer, which is exactly what makes the Section 1 model-portability promise real rather than rhetorical.</p>
+
+  <figure>
+    <div class="fpad">
+      <svg viewBox="0 0 820 250" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans">
+        <rect x="0" y="30" width="200" height="190" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+        <text x="100" y="22" text-anchor="middle" font-size="10.5" fill="#93816F" letter-spacing="1.5">AGENTS BUILT ANYWHERE</text>
+        <g font-size="12" fill="#5C4A3B" text-anchor="middle">
+          <text x="100" y="72">LangChain</text><text x="100" y="102">CrewAI</text><text x="100" y="132">Agentforce</text><text x="100" y="162">Hyperscaler builders</text><text x="100" y="192">Custom stacks</text>
+        </g>
+        <rect x="270" y="20" width="280" height="210" rx="8" fill="rgba(74,110,168,.10)" stroke="#4A6EA8" stroke-width="1.6"/>
+        <text x="410" y="48" text-anchor="middle" font-family="Playfair Display" font-weight="700" font-size="18" fill="#1E0F07">Lyzr Control Plane</text>
+        <g font-size="11.5" fill="#3A5686" text-anchor="middle">
+          <text x="410" y="82">Model layer: swap without rewrite</text>
+          <text x="410" y="110">Eval &amp; simulation gate</text>
+          <text x="410" y="138">Identity per agent</text>
+          <text x="410" y="166">Audit trail · version tags</text>
+          <text x="410" y="194">Model concentration cap</text>
+        </g>
+        <rect x="620" y="30" width="200" height="190" rx="6" fill="#FFFDFA" stroke="#D9CDBC"/>
+        <text x="720" y="22" text-anchor="middle" font-size="10.5" fill="#93816F" letter-spacing="1.5">ANY RUNTIME</text>
+        <g font-size="12" fill="#5C4A3B" text-anchor="middle">
+          <text x="720" y="82">AWS</text><text x="720" y="112">GCP</text><text x="720" y="142">Azure</text><text x="720" y="172">On-prem / private</text>
+        </g>
+        <g stroke="#B5A390" stroke-width="1.4"><line x1="200" y1="125" x2="268" y2="125"/><line x1="552" y1="125" x2="618" y2="125"/></g>
+        <g fill="#B5A390"><path d="M268 125 l-8 -4 v8 z"/><path d="M618 125 l-8 -4 v8 z"/></g>
+        <text x="410" y="248" text-anchor="middle" font-size="10.5" fill="#2A6650" letter-spacing="1">NO MIGRATION · NO REWRITE · MODEL DECISIONS STAY YOURS</text>
+      </svg>
+    </div>
+    <div class="cap"><b>Figure 4: Where the plane sits.</b> Above the model, across the framework, portable across clouds. The orchestration, evaluation, memory, and knowledge-graph capabilities that generate the Figure 3 telemetry live inside the center panel. Source: Lyzr product architecture.</div>
+  </figure>
+
+  <p>Underneath, the observable surface is generated by the plane's orchestration, evaluation, and memory capabilities. Long-running, multi-agent flows execute as persisted, retried, exactly-once steps; the orchestration layer of Lyzr Studio, which the control plane governs like any other. A simulation and evaluation stage runs many thousands of simulations per agent as a proving ground, so failures surface before a user ever sees them, and a shared knowledge graph and memory give agents grounded context. Each capability contributes a slice of the surface the plane watches; the metrics in Figure 3 are what they make visible.</p>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>03</span></div>
+</section>
+
+<!-- ============ SECTION 4 ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 04: Workflow vs. Control</span></div>
+  <div class="eyebrow" style="color:var(--goldD)">SECTION 04: "I Already Have Orchestration"</div>
+  <h2 class="st">Workflow automation is<br/>not a <em>control plane</em></h2>
+  <p class="deck">The reader's real question is fair: "I already run workflow tooling: why do I need this?" The honest answer is that they solve different problems, and confusing them is how governance debt accumulates.</p>
+
+  <div class="grid2">
+    <div class="k">Frame the tool fairly<span class="q">Capable orchestration is a real category: just a different layer</span></div>
+    <div class="body">
+      <p>Workflow-automation platforms are genuinely capable: visual builders, hundreds of integrations, human-in-the-loop gates, execution logs, model routing, queue-based scaling, self-hosting. None of that is in dispute, and a control plane does not replace it. What it does is govern a different surface. A workflow tool governs <em class="term">the tool</em>: authentication and role-based access on its own platform. A control plane governs <em class="term">agent behaviour</em> across every agent, regardless of where that agent was built.</p>
+    </div>
+  </div>
+
+  <p>Draw the line where workflow automation stops and governance begins. Model-concentration caps, evaluation-gated promotion, and audit trails are first-class primitives in a control plane: not things you wire up node by node and hope stay consistent. Governance in a workflow tool is scoped to the workflows built inside that tool; governance in a control plane is scoped to the whole estate: an agent built in LangChain, a CrewAI service, an Agentforce flow, a Claude-backed assistant, all held to the same policy from one place.</p>
+
+  <p>The positioning statement is not adversarial. Workflow automation is where you build <em class="term">some</em> flows. A control plane is where <em class="term">all</em> your agents , however built , get governed. Lyzr Studio has its own orchestration for building flows, and those flows inherit the control plane's governance by default rather than bolting it on node by node. The useful mental model, borrowed from the broader market's "agent gateway" framing, is that these are different layers of the same stack; and the reader who already runs orchestration is exactly the reader who most needs a governing layer above it, because they are already producing agents faster than they can watch them.</p>
+
+  <div class="callout">
+    <div class="h">The distinction that matters</div>
+    <p>A workflow tool answers "did this flow run?" A control plane answers "should this agent , any agent, anywhere in the estate , be allowed to run, on which model, evaluated against what, under whose identity, and revertible to which version?" Those are different questions, and only the second survives a model getting banned.</p>
+  </div>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>04</span></div>
+</section>
+
+<!-- ============ SECTION 5 ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 05: The Field</span></div>
+  <div class="eyebrow" style="color:var(--purpleD)">SECTION 05: Competitive Landscape</div>
+  <h2 class="st">Observability tells you<br/>what <em>already</em> happened</h2>
+  <p class="deck">The control-plane field is real and crowded. The credible move is to name it, then differentiate on the axis a CTO actually cares about.</p>
+
+  <p>The category is legitimately contested. Enterprise monitoring platforms unify ML and GenAI observability for regulated, safety-critical settings. Framework-native tools offer the deepest integration with the framework they belong to, at the cost of being locked to it. Telemetry-native platforms bring open-standards tracing and drift detection from an ML-monitoring heritage. Open-source self-hosting leaders let teams run the stack themselves. Eval-first and issue-lifecycle challengers compete on evaluation depth. And the hyperscalers ship their own agent gateways and model-safety layers. This is a serious field, and any paper that waves it away loses the reader in a sentence.</p>
+
+  <p>The differentiation axis that matters is not feature count; it is <em class="term">observe versus govern</em>. Most of the field observes: it tells you what happened, cleanly and often beautifully. The claim here is narrower and harder: govern, build, and deploy in one plane, framework-agnostic, with the model-concentration and sovereignty controls that pure observability does not carry. Tie it back to Section 1: an observability tool does not help you when a model gets banned. A control plane with model governance does. That is the axis, and it is the one a technical leader is actually buying on.</p>
+
+  <p>Two honest refinements keep this credible. First, the sharpest competitor is not an observability tool at all but an enterprise platform that already calls itself a control plane; against it, the differentiation is not "they only watch" but the verb , it monitors ML and GenAI, whereas the Lyzr Control Plane builds, gates, and deploys agents across frameworks and clouds. Second, the hyperscaler is the real objection, because adopting the cloud you already pay for is the path of least resistance , and here the geopolitical thread cuts our way: a hyperscaler's governance is scoped to agents built in its ecosystem and running in its cloud, while a neutral plane is cross-cloud, cross-framework, and portable off the hyperscaler entirely. For a reader worried about concentration, adding a vendor they can leave is a very different proposition from deepening one they cannot.</p>
+
+  <h3 class="sub">The same estate, ungoverned versus governed</h3>
+  <p>Stated as a before-and-after, the difference stops being abstract.</p>
+  <div class="ba">
+    <div class="col bad">
+      <div class="hd">Deployment without a control plane</div>
+      <ul>
+        <li><b>Deployment</b>: manual and ad-hoc, per team</li>
+        <li><b>Frameworks</b>: locked into one stack</li>
+        <li><b>Cloud</b>: re-engineer per cloud</li>
+        <li><b>Evaluation</b>: failures caught after the fact</li>
+        <li><b>Rollback</b>: manual guesswork</li>
+        <li><b>Identity</b>: shared or none</li>
+        <li><b>Banned model</b>; a re-architecture project</li>
+      </ul>
+    </div>
+    <div class="col good">
+      <div class="hd">On the Lyzr Control Plane</div>
+      <ul>
+        <li><b>Deployment</b>; one no-touch, governed pipeline</li>
+        <li><b>Frameworks</b>: fully framework-agnostic</li>
+        <li><b>Cloud</b>: switch the target runtime</li>
+        <li><b>Evaluation</b>: gated before production</li>
+        <li><b>Rollback</b>: revert to a version tag</li>
+        <li><b>Identity</b>; a dedicated identity per agent</li>
+        <li><b>Banned model</b>; a config change, not a rebuild</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure>
+    <div class="fpad">
+      <svg viewBox="0 0 820 150" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans">
+        <line x1="40" y1="90" x2="780" y2="90" stroke="#D9CDBC" stroke-width="1.4"/>
+        <g fill="#B5A390"><path d="M780 90 l-10 -5 v10 z"/></g>
+        <text x="40" y="118" font-size="11" fill="#93816F">OBSERVE: tell me what happened</text>
+        <text x="640" y="118" font-size="11" fill="#93816F">GOVERN · BUILD · DEPLOY</text>
+        <g font-size="11.5" text-anchor="middle">
+          <circle cx="150" cy="90" r="5" fill="#B5A390"/><text x="150" y="72" fill="#5C4A3B">Monitoring tools</text>
+          <circle cx="300" cy="90" r="5" fill="#B5A390"/><text x="300" y="60" fill="#5C4A3B">Framework-native</text>
+          <circle cx="450" cy="90" r="5" fill="#B5A390"/><text x="450" y="72" fill="#5C4A3B">Eval-first</text>
+          <circle cx="600" cy="90" r="6" fill="#4A6EA8"/><text x="600" y="60" fill="#5C4A3B">Hyperscaler gateways</text>
+          <circle cx="730" cy="90" r="8" fill="#EC7943"/><text x="730" y="72" fill="#B4541F" font-weight="600">Lyzr Control Plane</text>
+        </g>
+      </svg>
+    </div>
+    <div class="cap"><b>Figure 5: Positioning the field.</b> Categories placed by primary job, from observation toward govern-build-deploy. Positions are directional, not a scored ranking. Source: Lyzr market analysis.</div>
+  </figure>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>05</span></div>
+</section>
+
+<!-- ============ SECTION 7 ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 06: Form Factor</span></div>
+  <div class="eyebrow" style="color:var(--blueD)">SECTION 06: Packaging &amp; Form Factor</div>
+  <h2 class="st">Lyzr Studio, block, or the<br/>plane you <em>adopt</em></h2>
+  <p class="deck">No pricing here; this is a technical paper, and dollar tiers belong in the sales conversation. The question this section answers is structural: how does the control plane arrive, and can it govern agents you built somewhere else?</p>
+
+  <p>The Lyzr Control Plane is part of Lyzr Studio, and it is also available as a separate block. The stronger technical story is the second: framework-agnostic, drop-in governance over agents built anywhere. That is what ties it directly to the build-versus-govern distinction in Section 2. You do not need to have built inside Lyzr Studio to bring an agent under governance, the plane connects to what you already run.</p>
+
+  <h3 class="sub">Open source is the on-ramp, not a footnote</h3>
+  <p>For a developer-credible audience, the way in is not a sales call; it is running the thing yourself. An open-source control plane is how a technical team adopts and builds confidence before any commercial engagement, and it is also the honest answer to the lock-in question this whole paper has to face. There is a tension a careful reader will notice: Section 1 warns against single points of dependency, and the paper's ask is to adopt one governing layer. The resolution is that a framework- and model-agnostic control plane is the thing that <em class="term">prevents</em> lock-in rather than creating it; but that only holds if the exit is real. It is: everything runs on open protocols in your own environment, the runtime keeps running wherever you take it, and there is no proprietary format or migration penalty on the way out. An adoption motion you can reverse is a fundamentally different commitment from one you cannot.</p>
+
+  <h3 class="sub">Deployment form factors</h3>
+  <p>The genuinely technical packaging question is where it runs. The plane deploys to cloud, self-hosted, or on-premises and private environments, running inside the customer's own boundary so data never leaves it, which is what the geopolitical thread of Section 1 demands for regulated and on-prem readers.</p>
+
+  <table class="cmp">
+    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>Do I need Lyzr Studio to use it?</td><td class="yes">No: available as a standalone block that governs agents built anywhere.</td></tr>
+      <tr><td>Can it govern agents built elsewhere?</td><td class="yes">Yes: framework-agnostic, drop-in over LangChain, CrewAI, Agentforce, custom stacks.</td></tr>
+      <tr><td>How do I try it without a sales call?</td><td class="yes">Open-source control plane: adopt and build confidence first.</td></tr>
+      <tr><td>What's my exit if I move off?</td><td class="yes">Open protocols, your environment, no proprietary format or migration tax.</td></tr>
+      <tr><td>Where does it run?</td><td class="yes">Cloud, self-hosted, or on-prem / private: inside your boundary.</td></tr>
+    </tbody>
+  </table>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>06</span></div>
+</section>
+
+<!-- ============ SECTION 8: PROOF ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 07: Proof</span></div>
+  <div class="eyebrow" style="color:var(--greenD)">SECTION 07: Proof in the Field</div>
+  <h2 class="st">Governance at scale,<br/>proven <em>first</em></h2>
+  <p class="deck">The proof that validates a control-plane thesis is not "we built agents for a big logo." It is "the governance works, at scale, across frameworks." The roster below leads with the deployments that prove that.</p>
+
+  <p>Enterprise logos answer "can Lyzr build?" The control-plane thesis needs the answer to "does the governance hold?"; so this section is sorted by what each deployment actually proves, not by brand recognition. The first tier is on-thesis: multi-agent control, auditability, framework-agnostic governance, production at scale.</p>
+
+  <h4 class="sub2">Tier 1; Governance, proven</h4>
+  <div class="cases">
+    <div class="case tier1">
+      <div class="top"><span class="nm">WTW: governed retirement advisor, live over a year</span></div>
+      <p>A fully governed, compliant retirement advisor that pulled customers back from generic chat tooling and has run in production for more than a year. Not a pilot that survived: a governed agent holding real users inside a regulated advice workflow, continuously, through more than a year of model and platform churn beneath it.</p>
+      <div class="proves">Proves: governed, compliant, durable in production; the single hardest claim for anyone in the Section 5 field to match.</div>
+    </div>
+    <div class="case tier1">
+      <div class="top"><span class="nm">Prophet: MAIA, one governed layer across every model</span></div>
+      <p>Prophet, the global brand consultancy, had AI everywhere and governance nowhere: multiple models in use, parallel workflows per function, and no way to retain or reuse what was learned. The requirement it wrote for itself is this paper's thesis in the customer's own words; the ability to work across multiple LLMs <em class="term">without dependency on any one of them</em>, with role-based access, centralized knowledge, and persistent memory underneath. MAIA, built on Lyzr, is that layer: one governed surface across Gemini, Claude and GPT-class models, agents scoped endorsed, restricted or private, every output traceable to source, and no silent overrides.</p>
+      <div class="proves">Proves: Model Dependency Exposure (Section 1) as a live customer requirement; a firm that deliberately engineered away single-provider dependence. Adoption phase; qualitative, no outcome metrics yet.</div>
+    </div>
+    <div class="case tier1">
+      <div class="top"><span class="nm">MSP Corp: governable AI across chat and voice</span></div>
+      <p>A manager–sub-agent architecture that separates decision-making from execution: a control-layer Manager Agent holds no data or system access, so all business logic stays contained in scoped execution agents. The result is a support estate that is predictable, auditable, and adaptable: governable as it scales.</p>
+      <div class="proves">Proves: explicit control, auditability, scoped access; the governance thesis in one named case.</div>
+    </div>
+    <div class="case tier1">
+      <div class="top"><span class="nm">Movate: unified AI pod for SDLC automation</span></div>
+      <p>A central knowledge graph plus multi-agent architecture, built explicitly to scale automation while maintaining consistency and governance: with OAuth authentication, role-based access, complete audit trails, and private cloud connectivity. Measured gains of 25–35% faster change-impact analysis and 30–40% faster test preparation.</p>
+      <div class="proves">Proves: governance primitives + real numbers, delivered through a systems-integrator partner.</div>
+    </div>
+    <div class="case tier1">
+      <div class="top"><span class="nm">Global professional-services firm: procurement OS</span></div>
+      <p>In twelve weeks, fragmented procurement workflows were replaced by a unified operating layer where teams work through standardized, auditable processes powered by coordinated agents: configurable across multiple engagements rather than rebuilt each time.</p>
+      <div class="proves">Proves: auditable, orchestrated governance, repeatable across a portfolio.</div>
+    </div>
+    <div class="case tier1">
+      <div class="top"><span class="nm">Global chip manufacturer: Agentforce → Lyzr migration</span></div>
+      <p>One of the world's largest chip makers migrated its customer-service agents off a framework-locked platform onto Lyzr, cutting build time by 70% while owning every piece of its AI IP.</p>
+      <div class="proves">Proves: framework-agnosticism and portability; the Section 5 competitive claim, in production.</div>
+    </div>
+    <div class="case tier1">
+      <div class="top"><span class="nm">Fortune-100 CVC arm: 200+ interconnected agents</span></div>
+      <p>A corporate venture arm runs an agentic operating system of more than two hundred interconnected agents, cutting roughly 80% of the time spent sourcing and evaluating startups; the estate size that makes eyeballing impossible and a control layer mandatory.</p>
+      <div class="proves">Proves: the Section 2 scale argument; you cannot govern 200 agents by hand.</div>
+    </div>
+  </div>
+
+  <h4 class="sub2">Tier 2: Production and metric proof</h4>
+  <div class="cases">
+    <div class="case tier2">
+      <div class="top"><span class="nm">Verifone: governed support estate, chat and voice</span></div>
+      <p>An AI voice and chat assistant fronting a global payments support operation, with Wingman , a real-time agent-assist copilot , behind it, retrieving across Salesforce, VHQ, Commander and internal documentation. The governance is the interesting part, not the automation: CX executives authenticate through Okta SSO; a router agent performs intent analysis and picks a path; low-confidence responses fall back to clarification or escalation rather than guessing; and in the agent-assist layer, every suggested response is reviewed by the human agent before it is sent, with approve/reject decisions feeding a review queue that tunes the knowledge base. Average handle time fell from roughly 30 minutes to 15 , a 50% reduction , with agents redirected from routine queries to the complex issues that need them.</p>
+      <div class="proves">Proves: identity, human-in-the-loop gating, and low-confidence fallback running in a live production estate.</div>
+    </div>
+  </div>
+
+  <h4 class="sub2">First-party and aggregate proof</h4>
+  <p>The most on-thesis evidence is that Lyzr runs its own agents in production under its own control plane , CFO's office, KYC pre-validation, dispute management, universal banking support , the "we run on the thing we sell" proof. And at aggregate, hundreds of tracked use cases span multiple frameworks, industries, and channels, demonstrating governance across a genuinely heterogeneous estate rather than a single showcase build.</p>
+
+  <div class="stats four">
+    <div class="stat"><div class="n"><em>50%</em></div><div class="l">cut in Verifone's average handle time, 30 minutes to 15</div><div class="s">SOURCE: VERIFONE CASE STUDY</div></div>
+    <div class="stat"><div class="n">70%</div><div class="l">build-time reduction on the chip-maker's migration, with full IP ownership retained</div><div class="s">SOURCE: LYZR SERIES A ANNOUNCEMENT</div></div>
+    <div class="stat"><div class="n"><em>200+</em></div><div class="l">interconnected agents in one Fortune-100 CVC estate, ~80% sourcing time cut</div><div class="s">SOURCE: LYZR SERIES A ANNOUNCEMENT</div></div>
+    <div class="stat"><div class="n">&gt;1 yr</div><div class="l">WTW's governed retirement advisor, continuously live in production</div><div class="s">SOURCE: WTW, VIA LYZR</div></div>
+  </div>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>07</span></div>
+</section>
+
+<!-- ============ SECTION 9: CLOSE ============ -->
+<section class="sheet">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">SECTION 08: Close</span></div>
+  <div class="eyebrow">SECTION 08: The Layer That Outlives the Model</div>
+  <h2 class="st">The models will keep<br/><em>moving</em>. Ship anyway.</h2>
+  <p class="lead">The argument of this paper is a single line: the model landscape will keep shifting , by export law, by sanction, by sovereign policy , and the control plane is the layer that lets you keep shipping agents to production regardless of which model is available, banned, or repriced this quarter.</p>
+  <p>Everything else followed from that. Build, add, and deploy are real jobs, but they are only <em class="term">safe</em> when something governs them. The numbers a control plane can produce are the signal of maturity, because observing an agent and governing it are different acts. And the whole case rests on neutrality , framework-agnostic, model-agnostic, cloud-portable , because neutrality is exactly the property that survives a model going dark. A control plane that locks you in would fail its own thesis; one you can leave is the only kind worth adopting.</p>
+  <p>And for the reader who simply wants to see it work: run the open-source control plane yourself, today.</p>
+
+  <div class="cta">
+    <h2>Move beyond demos.<br/>Govern the fleet.</h2>
+    <p>See how agents go from any framework to production through a single governed pipeline: with model control, evaluation, and identity built in. Or run the open-source control plane yourself and bring your own agents under governance.</p>
+    <div class="btns"><a class="btn" href="https://www.lyzr.ai/control-plane/">Run the OSS Control Plane →</a><a class="btn alt" href="https://www.lyzr.ai/book-demo/">Book a technical walkthrough</a></div>
+  </div>
+  <div class="rfoot"><span>Lyzr Control Plane · Whitepaper</span><span>08</span></div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section class="sheet" id="sources">
+  <div class="rhead"><span class="t">Lyzr Control Plane · Whitepaper</span><span class="t">Sources</span></div>
+  <div class="eyebrow">Sources</div>
+  <h2 class="st">References</h2>
+  <div class="gap"></div>
+  <ol class="sources-list">
+    <li id="fn1"><span class="claim">Anthropic suspension of Fable 5 and Mythos 5 (Section 1).</span> Anthropic, "Redeploying Fable 5." <a class="src" href="https://www.anthropic.com/news/redeploying-fable-5">anthropic.com/news/redeploying-fable-5</a><a class="back" href="#fnref1">&#8617;</a></li>
+    <li id="fn2"><span class="claim">Chinese-model cost savings of 60&ndash;90% (Section 1).</span> CNBC, "Chinese AI models undercut U.S. rivals on cost," 7 July 2026. <a class="src" href="https://www.cnbc.com/2026/07/07/chinese-ai-models-costs-us-openai-anthropic.html">cnbc.com</a><a class="back" href="#fnref2">&#8617;</a></li>
+    <li id="fn3"><span class="claim">US government evaluating restrictions; Congress investigating (Section 1).</span> The Economic Times, citing Axios, "Trump administration may ban Chinese AI models." <a class="src" href="https://economictimes.indiatimes.com/news/international/world-news/trump-administration-may-ban-chinese-ai-models-axios-reports/articleshow/132519960.cms">economictimes.indiatimes.com</a><a class="back" href="#fnref3">&#8617;</a></li>
+    <li id="fn4"><span class="claim">Beijing's tiered framework for overseas model access (Section 1).</span> AI Weekly, "Beijing weighs curbing overseas access to top Chinese AI models." <a class="src" href="https://aiweekly.co/alerts/beijing-weighs-curbing-overseas-access-to-top-chinese-ai-models">aiweekly.co</a><a class="back" href="#fnref4">&#8617;</a></li>
+    <li id="fn5"><span class="claim">DeepSeek regulatory actions across jurisdictions (Section 1).</span> The Hacker News, "South Korea suspends DeepSeek AI downloads." <a class="src" href="https://thehackernews.com/2025/02/south-korea-suspends-deepseek-ai.html">thehackernews.com</a><a class="back" href="#fnref5">&#8617;</a></li>
+    <li id="fn6"><span class="claim">42% of companies abandon most AI initiatives before production (Section 2).</span> S&amp;P Global Market Intelligence, Voice of the Enterprise: AI &amp; Machine Learning 2025. <a class="src" href="https://www.spglobal.com/market-intelligence/en/news-insights/research/ai-experiences-rapid-adoption-but-with-mixed-outcomes-highlights-from-vote-ai-machine-learning">spglobal.com</a><a class="back" href="#fnref6">&#8617;</a></li>
+  </ol>
+</section>
+
+</div>
+</body>
+</html>
